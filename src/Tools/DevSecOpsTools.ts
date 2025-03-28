@@ -16,6 +16,7 @@ import {
   AuditSecretUsageParams,
   VaultIntegrationParams
 } from "../Interfaces/DevSecOps";
+import getClassMethods from "../utils/getClassMethods";
 
 export class DevSecOpsTools {
   private service: DevSecOpsService;
@@ -153,4 +154,6 @@ export class DevSecOpsTools {
       return formatErrorResponse(error);
     }
   }
-} 
+}
+
+export const DevSecOpsToolMethods = getClassMethods(DevSecOpsTools.prototype);

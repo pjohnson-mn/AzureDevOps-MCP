@@ -17,6 +17,7 @@ import {
   ConvertFindingsToWorkItemsParams,
   GetExploratoryTestStatisticsParams
 } from "../Interfaces/TestingCapabilities";
+import getClassMethods from "../utils/getClassMethods";
 
 export class TestingCapabilitiesTools {
   private service: TestingCapabilitiesService;
@@ -164,4 +165,6 @@ export class TestingCapabilitiesTools {
       return formatErrorResponse(error);
     }
   }
-} 
+}
+
+export const TestingCapabilitiesToolMethods = getClassMethods(TestingCapabilitiesTools.prototype);

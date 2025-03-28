@@ -17,6 +17,7 @@ import {
   ApprovePullRequestParams,
   MergePullRequestParams
 } from '../Interfaces/CodeAndRepositories';
+import getClassMethods from "../utils/getClassMethods";
 
 export class GitTools {
   private gitService: GitService;
@@ -206,4 +207,6 @@ export class GitTools {
       return formatErrorResponse(error);
     }
   }
-} 
+}
+
+export const GitToolMethods = getClassMethods(GitTools.prototype);

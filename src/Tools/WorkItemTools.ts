@@ -14,6 +14,7 @@ import {
   CreateLinkParams,
   BulkWorkItemParams
 } from '../Interfaces/WorkItems';
+import getClassMethods from "../utils/getClassMethods";
 
 export class WorkItemTools {
   private workItemService: WorkItemService;
@@ -177,4 +178,6 @@ export class WorkItemTools {
       return formatErrorResponse(error);
     }
   }
-} 
+}
+
+export const WorkItemToolMethods = getClassMethods(WorkItemTools.prototype);

@@ -15,6 +15,7 @@ import {
   CreatePackageDownloadReportParams,
   CheckPackageDependenciesParams
 } from "../Interfaces/ArtifactManagement";
+import getClassMethods from "../utils/getClassMethods";
 
 export class ArtifactManagementTools {
   private service: ArtifactManagementService;
@@ -148,4 +149,6 @@ export class ArtifactManagementTools {
       return formatErrorResponse(error);
     }
   }
-} 
+}
+
+export const ArtifactManagementToolMethods = getClassMethods(ArtifactManagementTools.prototype);

@@ -15,6 +15,7 @@ import {
   PredictBuildFailuresParams,
   OptimizeTestSelectionParams
 } from "../Interfaces/AIAssisted";
+import getClassMethods from "../utils/getClassMethods";
 
 export class AIAssistedDevelopmentTools {
   private service: AIAssistedDevelopmentService;
@@ -142,4 +143,6 @@ export class AIAssistedDevelopmentTools {
       return formatErrorResponse(error);
     }
   }
-} 
+}
+
+export const AIAssistedDevelopmentToolMethods = getClassMethods(AIAssistedDevelopmentTools.prototype);

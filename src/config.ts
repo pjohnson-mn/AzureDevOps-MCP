@@ -2,6 +2,14 @@ import dotenv from 'dotenv';
 import path from 'path';
 import fs from 'fs';
 import { AzureDevOpsConfig } from './Interfaces/AzureDevOps';
+import { AIAssistedDevelopmentToolMethods } from './Tools/AIAssistedDevelopmentTools';
+import { ArtifactManagementToolMethods } from './Tools/ArtifactManagementTools';
+import { BoardsSprintsToolMethods } from './Tools/BoardsSprintsTools';
+import { DevSecOpsToolMethods } from './Tools/DevSecOpsTools';
+import { GitToolMethods } from './Tools/GitTools';
+import { ProjectToolMethods } from './Tools/ProjectTools';
+import { TestingCapabilitiesToolMethods } from './Tools/TestingCapabilitiesTools';
+import { WorkItemToolMethods } from './Tools/WorkItemTools';
 
 // Try to load environment variables from .env file with multiple possible locations
 function loadEnvFile() {
@@ -59,7 +67,23 @@ export function getAzureDevOpsConfig(): AzureDevOpsConfig {
   };
 }
 
+const ALL_ALLOWED_TOOLS = AIAssistedDevelopmentToolMethods
+  .concat(ArtifactManagementToolMethods)
+  .concat(BoardsSprintsToolMethods)
+  .concat(DevSecOpsToolMethods)
+  .concat(GitToolMethods)
+  .concat(ProjectToolMethods)
+  .concat(TestingCapabilitiesToolMethods)
+  .concat(WorkItemToolMethods);
+
+/**
+ * Get allowed tools from `process.env.ALLOWED_TOOLS`.
+ * 
+ * For backward compatibility, if `process.env.ALLOWED_TOOLS` is `undefined`, all tools are allowed.
+ */
 export function getAllowedTools(): Set<string> {
-  const allowedTools = (process.env.ALLOWED_TOOLS || '').split(',');
+  const ALLOWED_TOOLS = process.env.ALLOWED_TOOLS;
+  if (!ALLOWED_TOOLS) return new Set(ALL_ALLOWED_TOOLS);
+  const allowedTools = ALLOWED_TOOLS.split(',');
   return new Set(allowedTools);
 }
