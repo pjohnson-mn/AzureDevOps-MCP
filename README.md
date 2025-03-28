@@ -148,6 +148,7 @@ The server can be configured using the following environment variables:
 | AZURE_DEVOPS_ORG_URL | URL of your Azure DevOps organization | Yes | - |
 | AZURE_DEVOPS_PERSONAL_ACCESS_TOKEN | Your personal access token | Yes | - |
 | AZURE_DEVOPS_PROJECT | Default project to use | Yes | - |
+| ALLOWED_TOOLS | Allowed tools. Separate with comma | No | - (All tools allowed) |
 
 ## Usage
 

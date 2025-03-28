@@ -13,6 +13,7 @@ import {
   GetWorkItemTypesParams,
   GetWorkItemTypeFieldsParams
 } from '../Interfaces/ProjectManagement';
+import getClassMethods from "../utils/getClassMethods";
 
 export class ProjectTools {
   private projectService: ProjectService;
@@ -150,4 +151,6 @@ export class ProjectTools {
       return formatErrorResponse(error);
     }
   }
-} 
+}
+
+export const ProjectToolMethods = getClassMethods(ProjectTools.prototype);

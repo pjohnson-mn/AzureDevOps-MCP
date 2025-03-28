@@ -20,6 +20,9 @@ startCommand:
       AZURE_DEVOPS_PROJECT:
         type: string
         description: Default Azure DevOps project to use
+      ALLOWED_TOOLS:
+        type: string
+        description: Allowed tools. Separate with comma
   commandFunction:
     # A JS function that produces the CLI command based on the given config to start the MCP on stdio.
     |-
@@ -29,7 +32,8 @@ startCommand:
       env: {
         AZURE_DEVOPS_ORG_URL: config.AZURE_DEVOPS_ORG_URL,
         AZURE_DEVOPS_PERSONAL_ACCESS_TOKEN: config.AZURE_DEVOPS_PERSONAL_ACCESS_TOKEN,
-        AZURE_DEVOPS_PROJECT: config.AZURE_DEVOPS_PROJECT
+        AZURE_DEVOPS_PROJECT: config.AZURE_DEVOPS_PROJECT,
+        ALLOWED_TOOLS: config.ALLOWED_TOOLS
       }
     })
   exampleConfig:

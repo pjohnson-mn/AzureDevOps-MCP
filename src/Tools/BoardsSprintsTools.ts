@@ -12,6 +12,7 @@ import {
   GetSprintCapacityParams,
   GetTeamMembersParams
 } from '../Interfaces/BoardsAndSprints';
+import getClassMethods from "../utils/getClassMethods";
 
 export class BoardsSprintsTools {
   private boardsSprintsService: BoardsSprintsService;
@@ -136,4 +137,6 @@ export class BoardsSprintsTools {
       return formatErrorResponse(error);
     }
   }
-} 
+}
+
+export const BoardsSprintsToolMethods = getClassMethods(BoardsSprintsTools.prototype);
