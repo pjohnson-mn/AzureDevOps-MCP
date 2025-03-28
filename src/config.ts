@@ -58,3 +58,8 @@ export function getAzureDevOpsConfig(): AzureDevOpsConfig {
     personalAccessToken
   };
 }
+
+export function getAllowedTools(): Set<string> {
+  const allowedTools = (process.env.ALLOWED_TOOLS || '').split(',');
+  return new Set(allowedTools);
+}
