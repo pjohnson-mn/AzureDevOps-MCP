@@ -17,7 +17,7 @@ This server provides a convenient API for interacting with Azure DevOps services
 
 ## Features
 
-The integration is organized into four main tool categories:
+The integration is organized into eight main tool categories:
 
 ### Work Item Tools
 - List work items using WIQL queries
@@ -71,6 +71,65 @@ The integration is organized into four main tool categories:
 - Get pull request comments
 - Approve pull requests
 - Merge pull requests
+
+### Testing Capabilities Tools
+- Run automated tests
+- Get test automation status
+- Configure test agents
+- Create test data generators
+- Manage test environments
+- Get test flakiness analysis
+- Get test gap analysis
+- Run test impact analysis
+- Get test health dashboard
+- Run test optimization
+- Create exploratory sessions
+- Record exploratory test results
+- Convert findings to work items
+- Get exploratory test statistics
+
+### DevSecOps Tools
+- Run security scans
+- Get security scan results
+- Track security vulnerabilities
+- Generate security compliance reports
+- Integrate SARIF results
+- Run compliance checks
+- Get compliance status
+- Create compliance reports
+- Manage security policies
+- Track security awareness
+- Rotate secrets
+- Audit secret usage
+- Configure vault integration
+
+### Artifact Management Tools
+- List artifact feeds
+- Get package versions
+- Publish packages
+- Promote packages
+- Delete package versions
+- List container images
+- Get container image tags
+- Scan container images
+- Manage container policies
+- Manage universal packages
+- Create package download reports
+- Check package dependencies
+
+### AI-Assisted Development Tools
+- Get AI-powered code reviews
+- Suggest code optimizations
+- Identify code smells
+- Get predictive bug analysis
+- Get developer productivity metrics
+- Get predictive effort estimations
+- Get code quality trends
+- Suggest work item refinements
+- Suggest automation opportunities
+- Create intelligent alerts
+- Predict build failures
+- Optimize test selection
 
 ## Installation
 
@@ -228,6 +287,10 @@ The service layer handles direct communication with the Azure DevOps API:
 - `BoardsSprintsService`: Boards and sprints operations
 - `ProjectService`: Project management operations
 - `GitService`: Git repository operations
+- `TestingCapabilitiesService`: Testing capabilities operations
+- `DevSecOpsService`: DevSecOps operations
+- `ArtifactManagementService`: Artifact management operations
+- `AIAssistedDevelopmentService`: AI-assisted development operations
 
 ### Tools Layer
 
@@ -237,6 +300,10 @@ The tools layer wraps the services and provides a consistent interface for the M
 - `BoardsSprintsTools`: Tools for boards and sprints operations
 - `ProjectTools`: Tools for project management operations
 - `GitTools`: Tools for Git operations
+- `TestingCapabilitiesTools`: Tools for testing capabilities operations
+- `DevSecOpsTools`: Tools for DevSecOps operations
+- `ArtifactManagementTools`: Tools for artifact management operations
+- `AIAssistedDevelopmentTools`: Tools for AI-assisted development operations
 
 ## Tool Registration
 
