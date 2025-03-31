@@ -144,7 +144,7 @@ npx -y @smithery/cli install @RyanCardin15/azuredevops-mcp --client claude
 ### Prerequisites
 - Node.js (v16 or later)
 - TypeScript (v4 or later)
-- An Azure DevOps account with a Personal Access Token (PAT)
+- An Azure DevOps account with a Personal Access Token (PAT) or appropriate on-premises credentials
 
 ### Setup
 
@@ -160,10 +160,39 @@ npx -y @smithery/cli install @RyanCardin15/azuredevops-mcp --client claude
    ```
 
 3. Configure environment variables (create a `.env` file or set them directly):
+
+   For Azure DevOps Services (cloud):
    ```
    AZURE_DEVOPS_ORG_URL=https://dev.azure.com/your-organization
    AZURE_DEVOPS_PERSONAL_ACCESS_TOKEN=your-personal-access-token
    AZURE_DEVOPS_PROJECT=your-default-project
+   AZURE_DEVOPS_IS_ON_PREMISES=false
+   ```
+
+   For Azure DevOps Server (on-premises):
+   ```
+   AZURE_DEVOPS_ORG_URL=https://your-server/tfs
+   AZURE_DEVOPS_PROJECT=your-default-project
+   AZURE_DEVOPS_IS_ON_PREMISES=true
+   AZURE_DEVOPS_COLLECTION=your-collection
+   AZURE_DEVOPS_API_VERSION=6.0  # Adjust based on your server version
+
+   # Authentication (choose one):
+   
+   # For PAT authentication:
+   AZURE_DEVOPS_AUTH_TYPE=pat
+   AZURE_DEVOPS_PERSONAL_ACCESS_TOKEN=your-personal-access-token
+
+   # For NTLM authentication:
+   AZURE_DEVOPS_AUTH_TYPE=ntlm
+   AZURE_DEVOPS_USERNAME=your-username
+   AZURE_DEVOPS_PASSWORD=your-password
+   AZURE_DEVOPS_DOMAIN=your-domain
+
+   # For Basic authentication:
+   AZURE_DEVOPS_AUTH_TYPE=basic
+   AZURE_DEVOPS_USERNAME=your-username
+   AZURE_DEVOPS_PASSWORD=your-password
    ```
 
 4. Build the project:
@@ -185,7 +214,7 @@ npx -y @smithery/cli install @RyanCardin15/azuredevops-mcp --client claude
 
 ### Personal Access Token (PAT)
 
-You'll need to create a Personal Access Token with appropriate permissions:
+For Azure DevOps Services (cloud), you'll need to create a Personal Access Token with appropriate permissions:
 
 1. Go to your Azure DevOps organization
 2. Click on your profile icon in the top right
@@ -198,16 +227,74 @@ You'll need to create a Personal Access Token with appropriate permissions:
    - Build: Read
    - Release: Read
 
+For Azure DevOps Server (on-premises), you have three authentication options:
+
+1. Personal Access Token (PAT):
+   - Similar to cloud setup, but create the PAT in your on-premises instance
+   - Set `AZURE_DEVOPS_AUTH_TYPE=pat`
+
+2. NTLM Authentication:
+   - Use your Windows domain credentials
+   - Set `AZURE_DEVOPS_AUTH_TYPE=ntlm`
+   - Provide username, password, and domain
+
+3. Basic Authentication:
+   - Use your local credentials
+   - Set `AZURE_DEVOPS_AUTH_TYPE=basic`
+   - Provide username and password
+
+### Azure DevOps Services vs. Azure DevOps Server
+
+This integration supports both cloud-hosted Azure DevOps Services and on-premises Azure DevOps Server:
+
+#### Azure DevOps Services (Cloud)
+- Simple setup with organization URL and PAT
+- Default configuration expects format: `https://dev.azure.com/your-organization`
+- Always uses PAT authentication
+- Sample configuration files provided in `.env.cloud.example`
+
+#### Azure DevOps Server (On-Premises)
+- Requires additional configuration for server URL, collection, and authentication
+- URL format varies based on your server setup: `https://your-server/tfs`
+- Requires specifying a collection name
+- Supports multiple authentication methods (PAT, NTLM, Basic)
+- May require API version specification for older server versions
+- Sample configuration files provided in `.env.on-premises.example`
+
+#### Key Differences
+
+| Feature | Azure DevOps Services | Azure DevOps Server |
+|---------|----------------------|---------------------|
+| URL Format | https://dev.azure.com/org | https://server/tfs |
+| Collection | Not required | Required |
+| Auth Methods | PAT only | PAT, NTLM, Basic |
+| API Version | Latest (automatic) | May need specification |
+| Connection | Always internet | Can be air-gapped |
+
+#### Example Configuration
+
+Copy either `.env.cloud.example` or `.env.on-premises.example` to `.env` and update the values as needed.
+
 ### Environment Variables
 
 The server can be configured using the following environment variables:
 
 | Variable | Description | Required | Default |
 |----------|-------------|----------|---------|
-| AZURE_DEVOPS_ORG_URL | URL of your Azure DevOps organization | Yes | - |
-| AZURE_DEVOPS_PERSONAL_ACCESS_TOKEN | Your personal access token | Yes | - |
+| AZURE_DEVOPS_ORG_URL | URL of your Azure DevOps organization or server | Yes | - |
 | AZURE_DEVOPS_PROJECT | Default project to use | Yes | - |
-| ALLOWED_TOOLS | Allowed tools. Separate with comma | No | - (All tools allowed) |
+| AZURE_DEVOPS_IS_ON_PREMISES | Whether using Azure DevOps Server | No | false |
+| AZURE_DEVOPS_COLLECTION | Collection name for on-premises | No* | - |
+| AZURE_DEVOPS_API_VERSION | API version for on-premises | No | - |
+| AZURE_DEVOPS_AUTH_TYPE | Authentication type (pat/ntlm/basic) | No | pat |
+| AZURE_DEVOPS_PERSONAL_ACCESS_TOKEN | Personal access token | No** | - |
+| AZURE_DEVOPS_USERNAME | Username for NTLM/Basic auth | No** | - |
+| AZURE_DEVOPS_PASSWORD | Password for NTLM/Basic auth | No** | - |
+| AZURE_DEVOPS_DOMAIN | Domain for NTLM auth | No | - |
+| ALLOWED_TOOLS | Allowed tools (comma-separated) | No | All tools |
+
+\* Required if `AZURE_DEVOPS_IS_ON_PREMISES=true`
+\** Required based on chosen authentication type
 
 ## Usage
 

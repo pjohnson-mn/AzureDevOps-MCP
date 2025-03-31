@@ -5,6 +5,16 @@ export interface AzureDevOpsConfig {
   orgUrl: string;
   project: string;
   personalAccessToken: string;
+  isOnPremises?: boolean;
+  collection?: string; // Collection name for on-premises
+  apiVersion?: string; // API version for on-premises
+  // Additional authentication options for on-premises
+  auth?: {
+    type: 'pat' | 'ntlm' | 'basic';
+    username?: string;
+    password?: string;
+    domain?: string; // For NTLM authentication
+  };
 }
 
 /**
