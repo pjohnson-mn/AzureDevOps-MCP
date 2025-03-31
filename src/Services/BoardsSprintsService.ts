@@ -2,6 +2,7 @@ import * as azdev from 'azure-devops-node-api';
 import { WorkApi } from 'azure-devops-node-api/WorkApi';
 import { CoreApi } from 'azure-devops-node-api/CoreApi';
 import { AzureDevOpsConfig } from '../Interfaces/AzureDevOps';
+import { AzureDevOpsService } from './AzureDevOpsService';
 import {
   GetBoardsParams,
   GetBoardColumnsParams,
@@ -20,16 +21,9 @@ interface TeamContext {
   team?: string;
 }
 
-export class BoardsSprintsService {
-  private connection: azdev.WebApi;
-  private config: AzureDevOpsConfig;
-
+export class BoardsSprintsService extends AzureDevOpsService {
   constructor(config: AzureDevOpsConfig) {
-    this.config = config;
-    this.connection = new azdev.WebApi(
-      config.orgUrl,
-      azdev.getPersonalAccessTokenHandler(config.personalAccessToken)
-    );
+    super(config);
   }
 
   /**
