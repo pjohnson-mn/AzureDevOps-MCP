@@ -57,6 +57,10 @@ The MCP server initializes four main tool instances, each handling different asp
 2. `boardsSprintsTools` - For board and sprint management operations
 3. `projectTools` - For project management operations
 4. `gitTools` - For Git repository operations
+5. `testingCapabilitiesTools` - For testing capabilities operations
+6. `devSecOpsTools` - For DevSecOps operations
+7. `artifactManagementTools` - For artifact management operations
+8. `aiAssistedDevelopmentTools` - For AI-assisted development operations
 
 ## Parameter Types
 
