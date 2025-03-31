@@ -45,7 +45,7 @@ startCommand:
         description: Domain for NTLM authentication
       ALLOWED_TOOLS:
         type: string
-        description: Allowed tools. Separate with comma
+        description: Optional comma-separated list of tool methods to enable (e.g., 'listWorkItems,getWorkItemById'). If not specified, all tools will be available.
   commandFunction:
     # A JS function that produces the CLI command based on the given config to start the MCP on stdio.
     |-

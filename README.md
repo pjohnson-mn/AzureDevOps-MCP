@@ -291,10 +291,23 @@ The server can be configured using the following environment variables:
 | AZURE_DEVOPS_USERNAME | Username for NTLM/Basic auth | No** | - |
 | AZURE_DEVOPS_PASSWORD | Password for NTLM/Basic auth | No** | - |
 | AZURE_DEVOPS_DOMAIN | Domain for NTLM auth | No | - |
-| ALLOWED_TOOLS | Allowed tools (comma-separated) | No | All tools |
+| ALLOWED_TOOLS | Comma-separated list of tool methods to enable | No | All tools |
 
 \* Required if `AZURE_DEVOPS_IS_ON_PREMISES=true`
 \** Required based on chosen authentication type
+
+#### Tool Filtering with ALLOWED_TOOLS
+
+The `ALLOWED_TOOLS` environment variable allows you to restrict which tool methods are available. This is completely optional - if not specified, all tools will be enabled.
+
+Format: Comma-separated list of method names with no spaces.
+
+Example:
+```
+ALLOWED_TOOLS=listWorkItems,getWorkItemById,searchWorkItems,createWorkItem
+```
+
+This would only enable the specified work item methods while disabling all others.
 
 ## Usage
 
