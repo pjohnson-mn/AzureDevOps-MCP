@@ -5,6 +5,7 @@ import {
   Operation
 } from 'azure-devops-node-api/interfaces/common/VSSInterfaces';
 import { AzureDevOpsConfig } from '../Interfaces/AzureDevOps';
+import { AzureDevOpsService } from './AzureDevOpsService';
 import {
   WorkItemByIdParams,
   SearchWorkItemsParams,
@@ -19,23 +20,9 @@ import {
   BulkWorkItemParams
 } from '../Interfaces/WorkItems';
 
-export class WorkItemService {
-  private connection: azdev.WebApi;
-  private config: AzureDevOpsConfig;
-
+export class WorkItemService extends AzureDevOpsService {
   constructor(config: AzureDevOpsConfig) {
-    this.config = config;
-    this.connection = new azdev.WebApi(
-      config.orgUrl,
-      azdev.getPersonalAccessTokenHandler(config.personalAccessToken)
-    );
-  }
-
-  /**
-   * Get the WorkItemTracking API client
-   */
-  private async getWorkItemTrackingApi(): Promise<WorkItemTrackingApi> {
-    return await this.connection.getWorkItemTrackingApi();
+    super(config);
   }
 
   /**

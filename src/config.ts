@@ -54,16 +54,66 @@ loadEnvFile();
 export function getAzureDevOpsConfig(): AzureDevOpsConfig {
   const orgUrl = process.env.AZURE_DEVOPS_ORG_URL;
   const project = process.env.AZURE_DEVOPS_PROJECT;
-  const personalAccessToken = process.env.AZURE_DEVOPS_PERSONAL_ACCESS_TOKEN;
-
-  if (!orgUrl || !project || !personalAccessToken) {
+  const personalAccessToken = process.env.AZURE_DEVOPS_PERSONAL_ACCESS_TOKEN || '';
+  const isOnPremises = process.env.AZURE_DEVOPS_IS_ON_PREMISES === 'true';
+  const collection = process.env.AZURE_DEVOPS_COLLECTION;
+  const apiVersion = process.env.AZURE_DEVOPS_API_VERSION;
+  
+  // Basic validation
+  if (!orgUrl || !project) {
     throw new Error('Missing required Azure DevOps configuration. Please check .env file or environment variables.');
+  }
+
+  // Authentication configuration
+  const authTypeInput = process.env.AZURE_DEVOPS_AUTH_TYPE || 'pat';
+  const authType = (authTypeInput === 'ntlm' || authTypeInput === 'basic' || authTypeInput === 'pat') 
+    ? authTypeInput 
+    : 'pat';
+    
+  let auth: AzureDevOpsConfig['auth'];
+
+  if (isOnPremises) {
+    switch (authType) {
+      case 'ntlm':
+        if (!process.env.AZURE_DEVOPS_USERNAME || !process.env.AZURE_DEVOPS_PASSWORD) {
+          throw new Error('NTLM authentication requires username and password.');
+        }
+        auth = {
+          type: 'ntlm',
+          username: process.env.AZURE_DEVOPS_USERNAME,
+          password: process.env.AZURE_DEVOPS_PASSWORD,
+          domain: process.env.AZURE_DEVOPS_DOMAIN
+        };
+        break;
+      case 'basic':
+        if (!process.env.AZURE_DEVOPS_USERNAME || !process.env.AZURE_DEVOPS_PASSWORD) {
+          throw new Error('Basic authentication requires username and password.');
+        }
+        auth = {
+          type: 'basic',
+          username: process.env.AZURE_DEVOPS_USERNAME,
+          password: process.env.AZURE_DEVOPS_PASSWORD
+        };
+        break;
+      case 'pat':
+      default:
+        if (!personalAccessToken) {
+          throw new Error('PAT authentication requires a personal access token.');
+        }
+        auth = {
+          type: 'pat'
+        };
+    }
   }
 
   return {
     orgUrl,
     project,
-    personalAccessToken
+    personalAccessToken,
+    isOnPremises,
+    collection,
+    apiVersion,
+    ...(auth && { auth })
   };
 }
 

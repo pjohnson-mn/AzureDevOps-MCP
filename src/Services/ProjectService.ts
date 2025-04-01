@@ -3,6 +3,7 @@ import { CoreApi } from 'azure-devops-node-api/CoreApi';
 import { WorkItemTrackingProcessApi } from 'azure-devops-node-api/WorkItemTrackingProcessApi';
 import { ProjectVisibility } from 'azure-devops-node-api/interfaces/CoreInterfaces';
 import { AzureDevOpsConfig } from '../Interfaces/AzureDevOps';
+import { AzureDevOpsService } from './AzureDevOpsService';
 import {
   ListProjectsParams,
   GetProjectDetailsParams,
@@ -16,16 +17,9 @@ import {
   GetWorkItemTypeFieldsParams
 } from '../Interfaces/ProjectManagement';
 
-export class ProjectService {
-  private connection: azdev.WebApi;
-  private config: AzureDevOpsConfig;
-
+export class ProjectService extends AzureDevOpsService {
   constructor(config: AzureDevOpsConfig) {
-    this.config = config;
-    this.connection = new azdev.WebApi(
-      config.orgUrl,
-      azdev.getPersonalAccessTokenHandler(config.personalAccessToken)
-    );
+    super(config);
   }
 
   /**

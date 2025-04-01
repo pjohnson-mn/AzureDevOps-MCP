@@ -1,6 +1,7 @@
 import * as azdev from 'azure-devops-node-api';
 import { GitApi } from 'azure-devops-node-api/GitApi';
 import { AzureDevOpsConfig } from '../Interfaces/AzureDevOps';
+import { AzureDevOpsService } from './AzureDevOpsService';
 import {
   ListRepositoriesParams,
   GetRepositoryParams,
@@ -20,16 +21,9 @@ import {
   CompletePullRequestParams
 } from '../Interfaces/CodeAndRepositories';
 
-export class GitService {
-  private connection: azdev.WebApi;
-  private config: AzureDevOpsConfig;
-
+export class GitService extends AzureDevOpsService {
   constructor(config: AzureDevOpsConfig) {
-    this.config = config;
-    this.connection = new azdev.WebApi(
-      config.orgUrl,
-      azdev.getPersonalAccessTokenHandler(config.personalAccessToken)
-    );
+    super(config);
   }
 
   /**
