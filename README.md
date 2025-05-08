@@ -166,15 +166,8 @@ npx -y @smithery/cli install @RyanCardin15/azuredevops-mcp --client claude
    AZURE_DEVOPS_ORG_URL=https://dev.azure.com/your-organization
    AZURE_DEVOPS_PROJECT=your-default-project
    AZURE_DEVOPS_IS_ON_PREMISES=false
-   # Authentication Type: 'pat' (Personal Access Token) or 'entra' (Azure Identity / DefaultAzureCredential)
    AZURE_DEVOPS_AUTH_TYPE=pat # or 'entra'
-
-   # For AZURE_DEVOPS_AUTH_TYPE=pat:
    AZURE_DEVOPS_PERSONAL_ACCESS_TOKEN=your-personal-access-token
-
-   # For AZURE_DEVOPS_AUTH_TYPE=entra, ensure your environment is configured
-   # for DefaultAzureCredential (e.g., logged in via Azure CLI `az login`, or
-   # environment variables like AZURE_CLIENT_ID, AZURE_TENANT_ID, AZURE_CLIENT_SECRET are set).
    ```
 
    For Azure DevOps Server (on-premises):
