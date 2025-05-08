@@ -52,6 +52,7 @@ export interface AzureDevOpsConfig {
   collection?: string; // Collection name for on-premises
   apiVersion?: string; // API version for on-premises
   auth?: AzureDevOpsAuthConfig; // Updated to use the new union type
+  token?: string; // Optional token for Azure Identity
 }
 
 /**

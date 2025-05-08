@@ -10,6 +10,7 @@ import { DevSecOpsTools } from './Tools/DevSecOpsTools';
 import { ArtifactManagementTools } from './Tools/ArtifactManagementTools';
 import { AIAssistedDevelopmentTools } from './Tools/AIAssistedDevelopmentTools';
 import { z } from 'zod';
+import { DefaultAzureCredential } from '@azure/identity';
 
 async function main() {
   try {
@@ -17,9 +18,14 @@ async function main() {
     console.log('Starting MCP server for Azure DevOps...');
     
     // Load configuration
-    const azureDevOpsConfig = getAzureDevOpsConfig();
+    let azureDevOpsConfig = getAzureDevOpsConfig();
     console.log('Successfully loaded Azure DevOps configuration');
-
+    if(azureDevOpsConfig.auth?.type === "entra") {
+      const defaultAzureCredential = new DefaultAzureCredential();
+      const scope = '499b84ac-1321-427f-aa17-267ca6975798/.default'
+      const azureToken = await defaultAzureCredential.getToken(scope);
+      azureDevOpsConfig.token = azureToken.token;
+    }
     // Load allowed tools
     const allowedTools = getAllowedTools();
     console.log('Successfully loaded allowed tools');
@@ -1670,7 +1676,8 @@ async function main() {
     );
 
     console.log(`Registered tools`);
-
+    await workItemTools.getWorkItemById({ id: 164842 });
+    //console.log(`Result: ${JSON.stringify(result)}`);
     // Create a transport (use stdio for simplicity)
     console.log('Creating StdioServerTransport');
     const transport = new StdioServerTransport();
