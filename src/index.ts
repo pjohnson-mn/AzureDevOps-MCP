@@ -18,7 +18,7 @@ async function main() {
     console.log('Starting MCP server for Azure DevOps...');
     
     // Load configuration
-    let azureDevOpsConfig = getAzureDevOpsConfig();
+    const azureDevOpsConfig = getAzureDevOpsConfig();
     console.log('Successfully loaded Azure DevOps configuration');
     if(azureDevOpsConfig.auth?.type === "entra") {
       const defaultAzureCredential = new DefaultAzureCredential();
