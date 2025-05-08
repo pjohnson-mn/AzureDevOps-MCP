@@ -1676,8 +1676,6 @@ async function main() {
     );
 
     console.log(`Registered tools`);
-    await workItemTools.getWorkItemById({ id: 164842 });
-    //console.log(`Result: ${JSON.stringify(result)}`);
     // Create a transport (use stdio for simplicity)
     console.log('Creating StdioServerTransport');
     const transport = new StdioServerTransport();
