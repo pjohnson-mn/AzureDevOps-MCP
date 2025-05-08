@@ -470,4 +470,4 @@ Contributions are welcome! Here's how you can contribute:
 
 Please ensure your code passes linting and includes appropriate tests.
 
-[![MseeP.ai Security Assessment Badge](https://mseep.net/pr/ryancardin15-azuredevops-mcp-badge.png)](https://mseep.ai/app/ryancardin15-azuredevops-mcp)
+[![Verified on MseeP](https://mseep.ai/badge.svg)](https://mseep.ai/app/22aecb18-6269-482a-9b0c-a96653410bf3)
