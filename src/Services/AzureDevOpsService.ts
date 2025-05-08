@@ -38,7 +38,7 @@ export class AzureDevOpsService {
       authHandler = azdev.getHandlerFromToken(config.token);
     } else if (config.isOnPremises && config.auth) {
       switch (config.auth.type) {
-        case "ntlm":
+        case 'ntlm':
           if (!config.auth.username || !config.auth.password) {
             throw new Error(
               "NTLM authentication requires username and password"
@@ -50,7 +50,7 @@ export class AzureDevOpsService {
             config.auth.domain
           );
           break;
-        case "basic":
+        case 'basic':
           if (!config.auth.username || !config.auth.password) {
             throw new Error(
               "Basic authentication requires username and password"
@@ -61,16 +61,14 @@ export class AzureDevOpsService {
             config.auth.password
           );
           break;
-        case "pat":
+        case 'pat':
         default: // Default to PAT for on-premises if auth type is missing or unrecognized
           if (!config.personalAccessToken) {
             throw new Error(
               "PAT authentication requires a personal access token for on-premises if specified or as fallback."
             );
           }
-          authHandler = getPersonalAccessTokenHandler(
-            config.personalAccessToken
-          );
+          authHandler = getPersonalAccessTokenHandler(config.personalAccessToken);
       }
     } else {
       // Cloud environment, and not 'entra'
