@@ -47,7 +47,7 @@ export type AzureDevOpsAuthConfig = PatAuth | NtlmAuth | BasicAuth | AzureIdenti
 export interface AzureDevOpsConfig {
   orgUrl: string;
   project: string;
-  personalAccessToken: string; // Remains for PAT handling in config.ts and service
+  personalAccessToken: string;
   isOnPremises?: boolean;
   collection?: string; // Collection name for on-premises
   apiVersion?: string; // API version for on-premises
