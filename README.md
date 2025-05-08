@@ -1,4 +1,5 @@
 # Azure DevOps MCP Integration
+[![GitHub stars](https://img.shields.io/github/stars/RyanCardin15/AzureDevOps-MCP.svg?style=social&label=Star)](https://github.com/RyanCardin15/AzureDevOps-MCP)
 [![smithery badge](https://smithery.ai/badge/@RyanCardin15/azuredevops-mcp)](https://smithery.ai/server/@RyanCardin15/azuredevops-mcp)
 
 <a href="https://glama.ai/mcp/servers/z7mxfcinp8">
@@ -465,3 +466,5 @@ Contributions are welcome! Here's how you can contribute:
 5. Open a Pull Request
 
 Please ensure your code passes linting and includes appropriate tests.
+
+[![MseeP.ai Security Assessment Badge](https://mseep.net/pr/ryancardin15-azuredevops-mcp-badge.png)](https://mseep.ai/app/ryancardin15-azuredevops-mcp)
