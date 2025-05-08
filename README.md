@@ -1,5 +1,8 @@
 # Azure DevOps MCP Integration
-[![GitHub stars](https://img.shields.io/github/stars/RyanCardin15/AzureDevOps-MCP.svg?style=social&label=Star)](https://github.com/RyanCardin15/AzureDevOps-MCP)
+
+# Star History
+[![Star History Chart](https://api.star-history.com/svg?repos=RyanCardin15/AzureDevOps-MCP&type=Date)](https://star-history.com/#RyanCardin15/AzureDevOps-MCP&Date)
+
 [![smithery badge](https://smithery.ai/badge/@RyanCardin15/azuredevops-mcp)](https://smithery.ai/server/@RyanCardin15/azuredevops-mcp)
 
 <a href="https://glama.ai/mcp/servers/z7mxfcinp8">
