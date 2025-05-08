@@ -279,6 +279,11 @@ This integration supports both cloud-hosted Azure DevOps Services and on-premise
 | API Version | Latest (automatic) | May need specification |
 | Connection | Always internet | Can be air-gapped |
 
+#### Entra Auth
+
+Ensure you have az cli installed and it is authenticated.
+azd and AZ Powershell modules should also work, as long as you're authenticated.
+
 #### Example Configuration
 
 Copy either `.env.cloud.example` or `.env.on-premises.example` to `.env` and update the values as needed.
