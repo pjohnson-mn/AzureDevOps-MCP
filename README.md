@@ -168,9 +168,10 @@ npx -y @smithery/cli install @RyanCardin15/azuredevops-mcp --client claude
    For Azure DevOps Services (cloud):
    ```
    AZURE_DEVOPS_ORG_URL=https://dev.azure.com/your-organization
-   AZURE_DEVOPS_PERSONAL_ACCESS_TOKEN=your-personal-access-token
    AZURE_DEVOPS_PROJECT=your-default-project
    AZURE_DEVOPS_IS_ON_PREMISES=false
+   AZURE_DEVOPS_AUTH_TYPE=pat # or 'entra'
+   AZURE_DEVOPS_PERSONAL_ACCESS_TOKEN=your-personal-access-token
    ```
 
    For Azure DevOps Server (on-premises):
@@ -271,9 +272,14 @@ This integration supports both cloud-hosted Azure DevOps Services and on-premise
 |---------|----------------------|---------------------|
 | URL Format | https://dev.azure.com/org | https://server/tfs |
 | Collection | Not required | Required |
-| Auth Methods | PAT only | PAT, NTLM, Basic |
+| Auth Methods | PAT, Entra ID (DefaultAzureCredential) | PAT, NTLM, Basic |
 | API Version | Latest (automatic) | May need specification |
 | Connection | Always internet | Can be air-gapped |
+
+#### Entra Auth
+
+Ensure you have az cli installed and it is authenticated.
+azd and AZ Powershell modules should also work, as long as you're authenticated.
 
 #### Example Configuration
 
@@ -290,8 +296,8 @@ The server can be configured using the following environment variables:
 | AZURE_DEVOPS_IS_ON_PREMISES | Whether using Azure DevOps Server | No | false |
 | AZURE_DEVOPS_COLLECTION | Collection name for on-premises | No* | - |
 | AZURE_DEVOPS_API_VERSION | API version for on-premises | No | - |
-| AZURE_DEVOPS_AUTH_TYPE | Authentication type (pat/ntlm/basic) | No | pat |
-| AZURE_DEVOPS_PERSONAL_ACCESS_TOKEN | Personal access token | No** | - |
+| AZURE_DEVOPS_AUTH_TYPE | Authentication type (pat/ntlm/basic/entra) | No | pat |
+| AZURE_DEVOPS_PERSONAL_ACCESS_TOKEN | Personal access token (for 'pat' auth) | No** | - |
 | AZURE_DEVOPS_USERNAME | Username for NTLM/Basic auth | No** | - |
 | AZURE_DEVOPS_PASSWORD | Password for NTLM/Basic auth | No** | - |
 | AZURE_DEVOPS_DOMAIN | Domain for NTLM auth | No | - |
