@@ -17,12 +17,12 @@ import {
 export class AzureDevOpsService {
   protected connection: azdev.WebApi;
   protected config: AzureDevOpsConfig;
+  protected authHandler: IRequestHandler | undefined;
 
   constructor(config: AzureDevOpsConfig) {
     this.config = config;
 
     // Get the appropriate authentication handler
-    let authHandler: IRequestHandler;
 
     if (config.auth?.type === "entra") {
       if (config.isOnPremises) {
@@ -30,12 +30,12 @@ export class AzureDevOpsService {
           "Azure Identity (DefaultAzureCredential) authentication is not supported for on-premises Azure DevOps."
         );
       }
-      if (!config.token) {
+      if(!config.entraAuthHandler) {
         throw new Error(
-          "Azure Identity authentication requires a token to be provided."
+          "Entra authentication requires an instance of EntraAuthHandler."
         );
       }
-      authHandler = azdev.getHandlerFromToken(config.token);
+      this.authHandler = config.entraAuthHandler;
     } else if (config.isOnPremises && config.auth) {
       switch (config.auth.type) {
         case 'ntlm':
@@ -44,7 +44,7 @@ export class AzureDevOpsService {
               "NTLM authentication requires username and password"
             );
           }
-          authHandler = getNtlmHandler(
+          this.authHandler = getNtlmHandler(
             config.auth.username,
             config.auth.password,
             config.auth.domain
@@ -56,7 +56,7 @@ export class AzureDevOpsService {
               "Basic authentication requires username and password"
             );
           }
-          authHandler = getBasicHandler(
+          this.authHandler = getBasicHandler(
             config.auth.username,
             config.auth.password
           );
@@ -68,7 +68,7 @@ export class AzureDevOpsService {
               "PAT authentication requires a personal access token for on-premises if specified or as fallback."
             );
           }
-          authHandler = getPersonalAccessTokenHandler(config.personalAccessToken);
+          this.authHandler = getPersonalAccessTokenHandler(config.personalAccessToken);
       }
     } else {
       // Cloud environment, and not 'entra'
@@ -79,7 +79,7 @@ export class AzureDevOpsService {
             "Personal Access Token is required for cloud authentication when auth type is PAT or not specified."
           );
         }
-        authHandler = getPersonalAccessTokenHandler(config.personalAccessToken);
+        this.authHandler = getPersonalAccessTokenHandler(config.personalAccessToken);
       } else {
         // This case should ideally not be reached if config is validated correctly
         throw new Error(
@@ -106,7 +106,8 @@ export class AzureDevOpsService {
     }
 
     // Create the WebApi instance
-    this.connection = new azdev.WebApi(baseUrl, authHandler, requestOptions);
+    // At this point, authHandler is guaranteed to be defined or an error would have been thrown.
+    this.connection = new azdev.WebApi(baseUrl, this.authHandler, requestOptions);
   }
 
   /**

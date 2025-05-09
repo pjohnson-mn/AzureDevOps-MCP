@@ -10,7 +10,7 @@ import { DevSecOpsTools } from './Tools/DevSecOpsTools';
 import { ArtifactManagementTools } from './Tools/ArtifactManagementTools';
 import { AIAssistedDevelopmentTools } from './Tools/AIAssistedDevelopmentTools';
 import { z } from 'zod';
-import { DefaultAzureCredential } from '@azure/identity';
+import { EntraAuthHandler } from './Services/EntraAuthHandler';
 
 async function main() {
   try {
@@ -20,11 +20,8 @@ async function main() {
     // Load configuration
     const azureDevOpsConfig = getAzureDevOpsConfig();
     console.log('Successfully loaded Azure DevOps configuration');
-    if(azureDevOpsConfig.auth?.type === "entra") {
-      const defaultAzureCredential = new DefaultAzureCredential();
-      const scope = '499b84ac-1321-427f-aa17-267ca6975798/.default'
-      const azureToken = await defaultAzureCredential.getToken(scope);
-      azureDevOpsConfig.token = azureToken.token;
+    if(azureDevOpsConfig.auth?.type === 'entra') {
+      azureDevOpsConfig.entraAuthHandler = await EntraAuthHandler.getInstance();
     }
     // Load allowed tools
     const allowedTools = getAllowedTools();
