@@ -233,18 +233,22 @@ async function main() {
     allowedTools.has("bulkCreateWorkItems") && server.tool("bulkCreateWorkItems", 
       "Create or update multiple work items in a single operation",
       {
-        workItems: z.array(z.object({
-          id: z.number().optional().describe("ID of work item (for updates)"),
-          workItemType: z.string().optional().describe("Type of work item to create"),
-          title: z.string().optional().describe("Title of the work item"),
-          description: z.string().optional().describe("Description of the work item"),
-          assignedTo: z.string().optional().describe("User to assign the work item to"),
-          state: z.string().optional().describe("Initial state of the work item"),
-          areaPath: z.string().optional().describe("Area path for the work item"),
-          iterationPath: z.string().optional().describe("Iteration path for the work item"),
-          additionalFields: z.record(z.any()).optional().describe("Additional fields to set on the work item"),
-          fields: z.record(z.any()).optional().describe("Fields to update on the work item (for updates)")
-        })).min(1).describe("Array of work items to create or update")
+        workItems: z.array(z.union([
+          z.object({
+            workItemType: z.string().describe("Type of work item to create"),
+            title: z.string().describe("Title of the work item"),
+            description: z.string().optional().describe("Description of the work item"),
+            assignedTo: z.string().optional().describe("User to assign the work item to"),
+            state: z.string().optional().describe("Initial state of the work item"),
+            areaPath: z.string().optional().describe("Area path for the work item"),
+            iterationPath: z.string().optional().describe("Iteration path for the work item"),
+            additionalFields: z.record(z.any()).optional().describe("Additional fields to set on the work item")
+          }),
+          z.object({
+            id: z.number().describe("ID of work item to update"),
+            fields: z.record(z.any()).describe("Fields to update on the work item")
+          })
+        ])).min(1).describe("Array of work items to create or update")
       },
       async (params, extra) => {
         const result = await workItemTools.bulkCreateWorkItems(params);
