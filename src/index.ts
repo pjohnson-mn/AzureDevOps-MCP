@@ -14,18 +14,13 @@ import { EntraAuthHandler } from './Services/EntraAuthHandler';
 
 async function main() {
   try {
-    // Log startup info
-    console.log('Starting MCP server for Azure DevOps...');
-    
     // Load configuration
     const azureDevOpsConfig = getAzureDevOpsConfig();
-    console.log('Successfully loaded Azure DevOps configuration');
     if(azureDevOpsConfig.auth?.type === 'entra') {
       azureDevOpsConfig.entraAuthHandler = await EntraAuthHandler.getInstance();
     }
     // Load allowed tools
     const allowedTools = getAllowedTools();
-    console.log('Successfully loaded allowed tools');
     
     // Initialize tools
     const workItemTools = new WorkItemTools(azureDevOpsConfig);
@@ -36,8 +31,6 @@ async function main() {
     const devSecOpsTools = new DevSecOpsTools(azureDevOpsConfig);
     const artifactManagementTools = new ArtifactManagementTools(azureDevOpsConfig);
     const aiAssistedDevelopmentTools = new AIAssistedDevelopmentTools(azureDevOpsConfig);
-    
-    console.log('Initialized tools');
 
     // Create MCP server
     const server = new McpServer({
@@ -1691,15 +1684,11 @@ async function main() {
       }
     );
 
-    console.log(`Registered tools`);
     // Create a transport (use stdio for simplicity)
-    console.log('Creating StdioServerTransport');
     const transport = new StdioServerTransport();
     
     // Connect to the transport and start listening
-    console.log('Connecting to transport...');
     await server.connect(transport);
-    console.log('Connected to transport');
 
   } catch (error) {
     console.error('Error starting MCP server:', error);
