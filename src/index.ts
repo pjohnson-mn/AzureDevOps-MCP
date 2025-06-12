@@ -1700,7 +1700,7 @@ async function main() {
     await server.connect(transport);
 
     // PJ streamable
-    app.post('/mcp', (req: Request, res: Response) => {
+    app.post('/mcp', async (req: Request, res: Response) => {
       // In stateless mode, create a new instance of transport and server for each request
       // to ensure complete isolation. A single instance would cause request ID collisions
       // when multiple clients connect concurrently.
